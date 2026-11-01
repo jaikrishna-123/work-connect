@@ -1,325 +1,1019 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WorkConnect | Find Local Part-Time Jobs</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
-    }
-    header {
-      background: white;
-      padding: 17px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 12px #0000000b;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .logo { font-size: 23px; font-weight: 800; color: #2459d3; }
-    nav a {
-      text-decoration: none;
-      color: #344054;
-      margin-left: 16px;
-      font-size: 14px;
-    }
-    button {
-      cursor: pointer;
-      border: 0;
-      border-radius: 8px;
-      padding: 11px 16px;
-      font-weight: 700;
-    }
-    .primary { background: #2459d3; color: white; }
-    .hero {
-      background: linear-gradient(120deg, #173b91, #3679ed);
-      color: white;
-      padding: 65px 7%;
-      text-align: center;
-    }
-    .hero h1 { font-size: clamp(30px, 6vw, 46px); margin-bottom: 15px; }
-    .hero p { color: #e1eaff; line-height: 1.7; }
-    .search {
-      background: white;
-      max-width: 850px;
-      margin: 28px auto 0;
-      padding: 12px;
-      border-radius: 12px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    input, select, textarea {
-      padding: 13px;
-      border: 1px solid #dce1eb;
-      border-radius: 7px;
-      font-size: 14px;
-      min-width: 0;
-    }
-    .search input { flex: 2; }
-    .search select { flex: 1; }
-    .search button { flex: 0 0 auto; }
-    main { max-width: 1100px; margin: auto; padding: 35px 18px; }
-    .section-title { margin-bottom: 20px; }
-    .section-title p { color: #667085; margin-top: 7px; }
-    .filters { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 22px; }
-    .filter {
-      background: white;
-      color: #344054;
-      border: 1px solid #dce1eb;
-    }
-    .filter.active { background: #2459d3; color: white; }
-    .jobs {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 17px;
-    }
-    .job {
-      background: white;
-      padding: 20px;
-      border: 1px solid #e8ebf2;
-      border-radius: 12px;
-    }
-    .job h3 { margin: 12px 0; }
-    .tag {
-      display: inline-block;
-      background: #edf3ff;
-      color: #2459d3;
-      padding: 6px 9px;
-      border-radius: 6px;
-      font-size: 12px;
-    }
-    .details { color: #667085; font-size: 14px; line-height: 1.9; }
-    .salary { color: #13844d; font-weight: 800; margin: 12px 0; }
-    .job button { width: 100%; }
-    .empty { color: #667085; padding: 25px; }
-    .forms {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      margin-top: 45px;
-    }
-    .panel {
-      background: white;
-      padding: 22px;
-      border-radius: 12px;
-      border: 1px solid #e8ebf2;
-    }
-    .panel h2 { margin-bottom: 16px; }
-    .panel input, .panel select, .panel textarea {
-      width: 100%;
-      margin-bottom: 12px;
-    }
-    footer {
-      text-align: center;
-      padding: 25px;
-      background: #172b54;
-      color: white;
-      margin-top: 40px;
-    }
-    @media(max-width: 550px) {
-      nav { width: 100%; display: flex; justify-content: space-between; }
-      nav a { margin: 0; }
-      .search { flex-direction: column; }
-      .search input, .search select { width: 100%; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkConnect | Part-Time Jobs in Mangalore &amp; Tumkur</title>
+<meta name="description" content="WorkConnect connects local workers with businesses that need flexible part-time staff in Mangalore and Tumkur. Demo college project.">
+<style>
+  /* ============================================================
+     WorkConnect v2 — single-file demo
+     Sections: 1) variables 2) base 3) header 4) hero 5) jobs
+               6) forms 7) applications 8) footer 9) responsive
+     ============================================================ */
+
+  /* 1) Design variables — change these to re-theme the whole site */
+  :root{
+    --blue:#2459d3;
+    --blue-dark:#173b91;
+    --blue-soft:#eef4ff;
+    --ink:#172033;
+    --muted:#667085;
+    --line:#e4e9f2;
+    --green:#13844d;
+    --green-soft:#e8f7ee;
+    --amber-bg:#fff8e8;
+    --amber-line:#ffd88a;
+    --amber-ink:#7a4d00;
+    --radius:16px;
+    --shadow:0 10px 30px -22px rgba(16,24,40,.45);
+  }
+
+  /* 2) Base */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:#f5f7fb;color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{line-height:1.2;letter-spacing:-.02em}
+  a{color:var(--blue);text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 18px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  section{padding:34px 0}
+  :focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:8px}
+
+  /* Buttons */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:7px;
+    border-radius:10px;padding:12px 18px;font-size:.92rem;font-weight:700;
+    transition:background .15s,transform .1s;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--blue);color:#fff}
+  .btn-primary:hover{background:var(--blue-dark)}
+  .btn-ghost{background:#fff;border:1px solid var(--line);color:#344054}
+  .btn-ghost:hover{border-color:#c3cfdf;background:#fbfcfe}
+  .btn-sm{padding:9px 14px;font-size:.85rem;border-radius:9px}
+  .btn-block{width:100%}
+
+  /* Demo notice strip */
+  .demo-strip{
+    background:var(--amber-bg);border-bottom:1px solid var(--amber-line);
+    color:var(--amber-ink);font-size:.78rem;font-weight:600;text-align:center;
+    padding:7px 14px;line-height:1.4;
+  }
+
+  /* 3) Header */
+  .site-header{
+    position:sticky;top:0;z-index:40;background:#fff;
+    border-bottom:1px solid var(--line);box-shadow:0 2px 12px rgba(16,24,40,.05);
+  }
+  .header-inner{display:flex;align-items:center;gap:14px;height:60px}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:1.15rem;letter-spacing:-.03em;color:var(--blue-dark)}
+  .logo-mark{
+    width:30px;height:30px;border-radius:9px;flex:none;
+    background:linear-gradient(135deg,#3679ed,#173b91);color:#fff;
+    display:grid;place-items:center;font-size:.72rem;font-weight:800;letter-spacing:.02em;
+  }
+  .site-nav{display:none;gap:20px;margin-left:10px}
+  .site-nav a{font-size:.88rem;font-weight:650;color:var(--muted);padding:6px 0;border-bottom:2px solid transparent}
+  .site-nav a:hover{color:var(--blue);border-bottom-color:#bcd0ff}
+  .header-actions{margin-left:auto;display:flex;gap:8px}
+
+  /* 4) Hero */
+  .hero{
+    position:relative;overflow:hidden;color:#fff;
+    background:linear-gradient(150deg,#173b91 0%,#2b63d8 58%,#3679ed 100%);
+    padding:42px 0 48px;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:radial-gradient(rgba(255,255,255,.16) 1px,transparent 1px);
+    background-size:22px 22px;
+    -webkit-mask-image:radial-gradient(circle at 85% 8%,#000,transparent 62%);
+    mask-image:radial-gradient(circle at 85% 8%,#000,transparent 62%);
+  }
+  .hero-inner{position:relative;z-index:1}
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:7px;
+    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);
+    border-radius:999px;padding:5px 12px;font-size:.76rem;font-weight:700;color:#e4eeff;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:#7cf0b4;box-shadow:0 0 0 4px rgba(124,240,180,.18)}
+  .hero h1{font-size:clamp(1.85rem,6.4vw,2.9rem);margin:14px 0 10px;font-weight:800}
+  .hero h1 em{font-style:normal;color:#9fd0ff}
+  .hero p{color:#d3e1ff;max-width:34rem;font-size:.98rem}
+  .search-card{
+    background:#fff;border-radius:16px;padding:10px;margin-top:22px;
+    display:grid;gap:8px;box-shadow:0 22px 44px -26px rgba(6,24,60,.85);
+  }
+  .search-card .field-group{position:relative}
+  .search-card input,.search-card select{
+    width:100%;border:1px solid var(--line);border-radius:10px;
+    padding:13px 13px 13px 38px;font-size:.93rem;font-family:inherit;
+    color:var(--ink);background:#fff;outline:none;appearance:none;
+  }
+  .search-card select{background-image:linear-gradient(45deg,transparent 50%,#8a99b5 50%),linear-gradient(135deg,#8a99b5 50%,transparent 50%);background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-left:13px}
+  .search-card input:focus,.search-card select:focus{border-color:#93b4ff;box-shadow:0 0 0 3px rgba(36,89,211,.13)}
+  .search-ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#8a99b5;pointer-events:none}
+  .hero-note{margin-top:12px;font-size:.8rem;color:#b9cdff}
+
+  /* 5) Jobs */
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .section-head h2{font-size:clamp(1.3rem,4.4vw,1.65rem)}
+  .section-head p{color:var(--muted);font-size:.88rem;margin-top:3px}
+  .result-count{font-size:.82rem;color:var(--muted);white-space:nowrap}
+  .result-count b{color:var(--ink)}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:14px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{
+    flex:none;background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:8px 14px;font-size:.84rem;font-weight:650;color:#344054;white-space:nowrap;
+  }
+  .chip:hover{border-color:#b9cbee;background:#fafcff}
+  .chip.active{background:var(--blue);border-color:var(--blue);color:#fff}
+  .jobs{display:grid;gap:14px}
+  .job{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px;display:flex;flex-direction:column;gap:11px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04);transition:box-shadow .15s,border-color .15s;
+  }
+  .job:hover{box-shadow:var(--shadow);border-color:#c9d6f5}
+  .job-top{display:flex;gap:11px;align-items:flex-start}
+  .job-ico{
+    width:42px;height:42px;border-radius:12px;flex:none;font-size:1.15rem;
+    background:var(--blue-soft);display:grid;place-items:center;
+  }
+  .job h3{font-size:1rem;font-weight:750}
+  .business{font-size:.82rem;color:var(--muted);margin-top:2px}
+  .new-badge{
+    margin-left:auto;flex:none;background:var(--green-soft);color:#116b3e;
+    font-size:.66rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+    padding:4px 8px;border-radius:6px;
+  }
+  .meta{display:grid;gap:5px;font-size:.85rem;color:#475467}
+  .meta-row{display:flex;gap:7px;align-items:center}
+  .meta-row svg{flex:none;color:#8a99b5}
+  .pay{font-weight:800;color:var(--green);font-size:1.02rem}
+  .pay small{font-weight:650;color:var(--muted);font-size:.76rem}
+  .job-foot{margin-top:auto;padding-top:12px;border-top:1px solid #eef1f7;display:flex;align-items:center;gap:10px}
+  .job-foot .posted{font-size:.74rem;color:#98a2b3}
+  .job-foot .btn,.applied{margin-left:auto}
+  .applied{
+    background:var(--green-soft);border:1px solid #c7ebd6;color:#116b3e;
+    font-weight:750;font-size:.84rem;padding:9px 13px;border-radius:9px;
+  }
+  .empty{
+    background:#fff;border:1px dashed #cfd8e8;border-radius:14px;
+    padding:30px 20px;text-align:center;color:var(--muted);font-size:.9rem;
+  }
+  .empty strong{display:block;color:var(--ink);font-size:.98rem;margin-bottom:4px}
+
+  /* 6) Forms / panels */
+  .grid-2{display:grid;gap:16px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .panel h3{font-size:1.06rem;display:flex;align-items:center;gap:8px}
+  .panel .hint{font-size:.84rem;color:var(--muted);margin:4px 0 15px}
+  .field{margin-bottom:11px}
+  .field label{display:block;font-size:.77rem;font-weight:750;color:#344054;margin-bottom:5px}
+  .field input,.field select,.field textarea{
+    width:100%;border:1px solid var(--line);border-radius:9px;padding:12px;
+    font-size:.92rem;font-family:inherit;color:var(--ink);background:#fff;outline:none;
+  }
+  .field select{
+    appearance:none;background-image:linear-gradient(45deg,transparent 50%,#8a99b5 50%),linear-gradient(135deg,#8a99b5 50%,transparent 50%);
+    background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;
+    background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:#93b4ff;box-shadow:0 0 0 3px rgba(36,89,211,.12)}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .profile-card{
+    display:none;background:var(--blue-soft);border:1px solid #d5e2ff;
+    border-radius:12px;padding:13px 14px;font-size:.86rem;margin-bottom:15px;
+  }
+  .profile-card.show{display:block}
+  .profile-card .who{font-weight:750;color:var(--blue-dark)}
+  .profile-card .edit{
+    margin-top:7px;font-size:.79rem;font-weight:750;color:var(--blue);
+    text-decoration:underline;background:none;padding:0;
+  }
+  .demo-limit{
+    margin-top:14px;background:#f8fafd;border:1px solid var(--line);border-radius:10px;
+    padding:11px 12px;font-size:.78rem;color:var(--muted);line-height:1.5;
+  }
+
+  /* 7) Applications */
+  .apps{display:grid;gap:10px}
+  .app{
+    background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:13px 14px;display:flex;gap:12px;align-items:center;
+  }
+  .app-ico{width:36px;height:36px;border-radius:10px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;flex:none}
+  .app strong{font-size:.92rem;display:block}
+  .app small{font-size:.78rem;color:var(--muted);display:block;margin-top:1px}
+  .app .pay{margin-left:auto;font-size:.88rem;white-space:nowrap}
+
+  /* How it works */
+  .steps{display:grid;gap:12px;counter-reset:step}
+  @media(min-width:760px){.steps{grid-template-columns:1fr 1fr}}
+  .step{
+    background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px;
+    display:flex;gap:11px;align-items:flex-start;font-size:.88rem;color:#475467;
+  }
+  .step-n{
+    counter-increment:step;flex:none;width:24px;height:24px;border-radius:7px;
+    background:var(--blue-soft);color:var(--blue-dark);font-weight:800;font-size:.76rem;
+    display:grid;place-items:center;margin-top:1px;
+  }
+  .step b{color:var(--ink);display:block;font-size:.9rem;margin-bottom:1px}
+
+  /* 8) Footer */
+  .site-footer{background:#101c3a;color:#aab8d4;padding:32px 0 24px;margin-top:10px;font-size:.86rem}
+  .foot-top{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:20px}
+  .foot-brand{color:#fff;font-weight:800;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+  .foot-brand .logo-mark{width:26px;height:26px;border-radius:8px;font-size:.62rem}
+  .foot-links{display:flex;gap:16px;flex-wrap:wrap}
+  .foot-links a{color:#aab8d4;font-size:.84rem}
+  .foot-links a:hover{color:#fff}
+  .foot-bottom{
+    border-top:1px solid #223458;padding-top:14px;display:flex;
+    justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.78rem;color:#8296b8;
+  }
+  .reset-btn{color:#8ea7d8;font-size:.78rem;text-decoration:underline;padding:0}
+
+  /* Toast */
+  .toast{
+    position:fixed;left:50%;bottom:22px;transform:translate(-50%,18px);
+    background:#101c3a;color:#fff;padding:12px 18px;border-radius:11px;
+    font-size:.87rem;font-weight:600;box-shadow:0 18px 36px -16px rgba(0,0,0,.6);
+    opacity:0;pointer-events:none;transition:.25s;z-index:100;max-width:90vw;text-align:center;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  /* 9) Responsive */
+  @media(min-width:700px){
+    .header-inner{height:66px}
+    .site-nav{display:flex}
+    .hero{padding:56px 0 62px}
+    .search-card{grid-template-columns:1.5fr 1fr auto;align-items:center}
+    .jobs{grid-template-columns:repeat(2,1fr)}
+    .site-footer .wrap{padding:0 22px}
+  }
+  @media(min-width:1000px){
+    .jobs{grid-template-columns:repeat(3,1fr)}
+    .grid-2{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:420px){
+    .field-row{grid-template-columns:1fr}
+    .header-actions .btn-label{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+  }
+</style>
 </head>
 <body>
 
-<header>
-  <div class="logo">WorkConnect</div>
-  <nav>
-    <a href="#jobs">Find Jobs</a>
-    <a href="#employer">Post Jobs</a>
-    <a href="#about">About</a>
-  </nav>
+<div class="demo-strip">Demo prototype · Sample jobs are examples, not verified vacancies.</div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark" aria-hidden="true">WC</span>
+      WorkConnect
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#jobs">Find jobs</a>
+      <a href="#profile">Worker profile</a>
+      <a href="#employer">Post a job</a>
+      <a href="#applications">My applications</a>
+      <a href="#about">About</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#employer" class="btn btn-primary btn-sm">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        <span class="btn-label">Post a job</span>
+      </a>
+    </div>
+  </div>
 </header>
 
-<section class="hero">
-  <h1>Find Work That Fits Your Life.</h1>
-  <p>Connect with local businesses and discover flexible part-time opportunities.</p>
-  <div class="search">
-    <input id="searchText" placeholder="Search jobs, e.g. Waiter">
-    <select id="city">
-      <option value="">All locations</option>
-      <option>Mangalore</option>
-      <option>Tumkur</option>
-    </select>
-    <button class="primary" onclick="showJobs()">Search Jobs</button>
-  </div>
-</section>
+<main id="top">
 
-<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <span class="hero-tag"><span class="dot" aria-hidden="true"></span> Mangalore &amp; Tumkur</span>
+      <h1>Find work that fits <em>your</em> timetable.</h1>
+      <p>Part-time shifts, weekends and evening work from local businesses near you. Search, apply, and get contacted directly — no fees.</p>
+
+      <div class="search-card">
+        <div class="field-group">
+          <svg class="search-ico" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <label class="sr-only" for="searchText">Search jobs</label>
+          <input id="searchText" type="search" placeholder="Search jobs, e.g. waiter, tuition" autocomplete="off">
+        </div>
+        <div class="field-group">
+          <label class="sr-only" for="city">City</label>
+          <select id="city">
+            <option value="">All cities</option>
+            <option value="Mangalore">Mangalore</option>
+            <option value="Tumkur">Tumkur</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" type="button" id="searchBtn">Search jobs</button>
+      </div>
+
+      <p class="hero-note" id="heroCount">Loading demo jobs…</p>
+    </div>
+  </section>
+
+  <!-- JOBS -->
   <section id="jobs">
-    <div class="section-title">
-      <h2>Explore Part-Time Jobs</h2>
-      <p>Discover flexible opportunities near you.</p>
-    </div>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Explore part-time jobs</h2>
+          <p>Flexible roles posted by local businesses.</p>
+        </div>
+        <span class="result-count" id="resultCount" aria-live="polite"></span>
+      </div>
 
-    <div class="filters">
-      <button class="filter active" onclick="setCategory('All',this)">All</button>
-      <button class="filter" onclick="setCategory('Restaurant',this)">Restaurant</button>
-      <button class="filter" onclick="setCategory('Retail',this)">Retail</button>
-      <button class="filter" onclick="setCategory('Events',this)">Events</button>
-      <button class="filter" onclick="setCategory('Delivery',this)">Delivery</button>
-    </div>
-
-    <div class="jobs" id="jobList"></div>
-  </section>
-
-  <section class="forms">
-    <div class="panel">
-      <h2>I'm a Worker</h2>
-      <p class="details">Find opportunities and contact employers.</p>
-      <input id="workerName" placeholder="Your name">
-      <input id="workerPhone" placeholder="Phone number">
-      <button class="primary" onclick="saveWorker()">Save Demo Profile</button>
-      <p id="workerMessage" class="details"></p>
-    </div>
-
-    <div class="panel" id="employer">
-      <h2>I'm an Employer</h2>
-      <p class="details">Post a part-time opportunity.</p>
-      <input id="employerName" placeholder="Business name">
-      <input id="jobTitle" placeholder="Job title">
-      <select id="jobCity">
-        <option value="">Select city</option>
-        <option>Mangalore</option>
-        <option>Tumkur</option>
-      </select>
-      <select id="jobCategory">
-        <option>Restaurant</option>
-        <option>Retail</option>
-        <option>Events</option>
-        <option>Delivery</option>
-      </select>
-      <input id="jobSalary" placeholder="Salary (e.g. ₹500/day)">
-      <input id="jobHours" placeholder="Shift (e.g. 4 PM - 9 PM)">
-      <button class="primary" onclick="postJob()">Post Demo Job</button>
-      <p id="postMessage" class="details"></p>
+      <div class="chips" id="categoryChips" role="group" aria-label="Filter by category"></div>
+      <div class="jobs" id="jobList" aria-live="polite"></div>
     </div>
   </section>
 
-  <section id="about" style="margin-top:40px">
-    <h2>About WorkConnect</h2>
-    <p class="details">Our mission is to connect local workers with businesses that need flexible staffing.</p>
+  <!-- PROFILE + EMPLOYER -->
+  <section id="profile">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Your worker profile</h2>
+          <p>Saved on this phone only. Needed before you can apply.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Worker profile -->
+        <div class="panel">
+          <h3><span aria-hidden="true">🧑‍🔧</span> I'm a worker</h3>
+          <p class="hint">Add your skills, area and free timings so employers know you're available.</p>
+
+          <div class="profile-card" id="profileCard">
+            <div class="who" id="profileWho"></div>
+            <div id="profileDetails"></div>
+            <button class="edit" type="button" id="editProfileBtn">Edit profile</button>
+          </div>
+
+          <form id="profileForm" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="workerName">Full name</label>
+                <input id="workerName" type="text" placeholder="e.g. Jai Krishna" autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="workerPhone">Phone (10 digits)</label>
+                <input id="workerPhone" type="tel" inputmode="numeric" maxlength="10" placeholder="98450 00000" autocomplete="tel">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="workerCity">Preferred city</label>
+                <select id="workerCity">
+                  <option value="">Select city</option>
+                  <option value="Mangalore">Mangalore</option>
+                  <option value="Tumkur">Tumkur</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="workerTime">Available timings</label>
+                <select id="workerTime">
+                  <option value="Weekday evenings">Weekday evenings</option>
+                  <option value="Weekday mornings">Weekday mornings</option>
+                  <option value="Weekends">Weekends</option>
+                  <option value="Any time (flexible)">Any time (flexible)</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="workerSkills">Skills (separate with commas)</label>
+              <input id="workerSkills" type="text" placeholder="e.g. serving, billing, Kannada &amp; English">
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Save profile</button>
+          </form>
+        </div>
+
+        <!-- Employer -->
+        <div class="panel" id="employer">
+          <h3><span aria-hidden="true">🏪</span> I'm an employer</h3>
+          <p class="hint">Post a part-time shift. It appears instantly at the top of the list.</p>
+
+          <form id="jobForm" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="employerName">Business name</label>
+                <input id="employerName" type="text" placeholder="e.g. Hotel Sangam">
+              </div>
+              <div class="field">
+                <label for="jobTitle">Job title</label>
+                <input id="jobTitle" type="text" placeholder="e.g. Restaurant helper">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="jobCity">City</label>
+                <select id="jobCity">
+                  <option value="">Select city</option>
+                  <option value="Mangalore">Mangalore</option>
+                  <option value="Tumkur">Tumkur</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="jobArea">Area / locality</label>
+                <input id="jobArea" type="text" placeholder="e.g. Hampankatta">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="jobCategory">Category</label>
+                <select id="jobCategory">
+                  <option>Restaurant</option>
+                  <option>Retail</option>
+                  <option>Events</option>
+                  <option>Delivery</option>
+                  <option>Tuition</option>
+                  <option>Office</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="jobShift">Shift / hours</label>
+                <input id="jobShift" type="text" placeholder="e.g. 5 PM – 10 PM">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="jobPay">Wage (₹)</label>
+                <input id="jobPay" type="number" inputmode="numeric" min="50" step="10" placeholder="500">
+              </div>
+              <div class="field">
+                <label for="jobUnit">Paid per</label>
+                <select id="jobUnit">
+                  <option value="day">Day</option>
+                  <option value="hour">Hour</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="jobDesc">Short description (optional)</label>
+              <textarea id="jobDesc" rows="2" placeholder="What will the person do? Any requirements?"></textarea>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Post demo job</button>
+            <p class="demo-limit">This is a prototype: the job is saved in this browser only and disappears if you clear site data or use another phone.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATIONS -->
+  <section id="applications">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>My applications</h2>
+          <p>Every demo application you've sent, newest first.</p>
+        </div>
+        <span class="result-count" id="appCount" aria-live="polite"></span>
+      </div>
+      <div class="apps" id="appList"></div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>How WorkConnect works</h2>
+          <p>Three steps for each side of the market.</p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="step-n" aria-hidden="true">1</span><div><b>Workers create a profile</b>Add your skills, city and free timings.</div></div>
+        <div class="step"><span class="step-n" aria-hidden="true">2</span><div><b>Employers post a shift</b>Role, area, hours and wage in one short form.</div></div>
+        <div class="step"><span class="step-n" aria-hidden="true">3</span><div><b>Apply in one tap</b>Your profile goes to the employer — no fees, no commission.</div></div>
+        <div class="step"><span class="step-n" aria-hidden="true">4</span><div><b>Agree and start</b>A short paid trial shift is a fair way to begin.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>About WorkConnect</h2>
+          <p>A college project with startup ambitions.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <p style="font-size:.92rem;color:#475467">
+          WorkConnect connects local workers with businesses that need flexible staffing in
+          Mangalore and Tumkur. The goal is simple: make short, honest, part-time work easy
+          to find for students, homemakers and anyone with a few free hours.
+        </p>
+        <p style="font-size:.92rem;color:#475467;margin-top:10px">
+          This version is a front-end prototype built with plain HTML, CSS and JavaScript.
+          Jobs, profiles and applications are stored in your browser's <b>localStorage</b>,
+          which means they are <b>not shared between devices yet</b>. Shared accounts and a
+          real database are the next stage.
+        </p>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:14px">
+          ⚠️ All listings are demonstration data. They are not verified vacancies.
+        </p>
+      </div>
+    </div>
   </section>
 </main>
 
-<footer>
-  <p>WorkConnect | Connecting Workers and Work Providers</p>
-  <p style="font-size:12px;margin-top:8px">Demo website – Sample vacancies are not verified real jobs.</p>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand"><span class="logo-mark" aria-hidden="true">WC</span> WorkConnect</div>
+        <p style="margin-top:6px;font-size:.8rem;color:#8296b8">Connecting workers and work providers.</p>
+      </div>
+      <div class="foot-links">
+        <a href="#jobs">Find jobs</a>
+        <a href="#profile">Worker profile</a>
+        <a href="#employer">Post a job</a>
+        <a href="#applications">My applications</a>
+        <a href="#about">About</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> WorkConnect · Demo website — sample vacancies are not real jobs.</span>
+      <button class="reset-btn" type="button" id="resetBtn">Reset demo data</button>
+    </div>
+  </div>
 </footer>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
+/* ============================================================
+   WorkConnect v2 — plain JavaScript, no libraries.
+
+   1. Sample data
+   2. Storage helpers (localStorage, safe in sandboxed previews)
+   3. Job rendering + filters
+   4. Worker profile
+   5. Applications
+   6. Employer job posting
+   7. Small utilities (toast, escaping, scrolling)
+   ============================================================ */
+
+/* ---------- 1. SAMPLE DATA ---------- */
+
+const CATEGORIES = ["All", "Restaurant", "Retail", "Events", "Delivery", "Tuition", "Office"];
+
+const CATEGORY_ICONS = {
+  Restaurant: "🍽️",
+  Retail: "🛍️",
+  Events: "🎪",
+  Delivery: "🛵",
+  Tuition: "📚",
+  Office: "🗂️"
+};
+
+/* Demo jobs — these are examples, not real vacancies. */
 const initialJobs = [
-  {id:1,title:"Restaurant Helper",city:"Mangalore",category:"Restaurant",salary:"₹500/day",hours:"5 PM - 10 PM"},
-  {id:2,title:"Retail Shop Assistant",city:"Tumkur",category:"Retail",salary:"₹450/day",hours:"4 PM - 8 PM"},
-  {id:3,title:"Event Support Staff",city:"Mangalore",category:"Events",salary:"₹600/day",hours:"Weekend"},
-  {id:4,title:"Delivery Assistant",city:"Tumkur",category:"Delivery",salary:"₹550/day",hours:"Flexible shift"}
+  { id: 1, title: "Restaurant Helper", business: "Hotel Sangam", city: "Mangalore", area: "Hampankatta",
+    category: "Restaurant", pay: 500, unit: "day", shift: "5 PM – 10 PM", posted: "2h ago",
+    desc: "Serve customers and help with table cleaning during the dinner rush." },
+
+  { id: 2, title: "Retail Shop Assistant", business: "Trendline Store", city: "Tumkur", area: "MG Road",
+    category: "Retail", pay: 450, unit: "day", shift: "4 PM – 8 PM", posted: "5h ago",
+    desc: "Arrange stock, help customers and support billing." },
+
+  { id: 3, title: "Event Support Staff", business: "Sri Krishna Hall", city: "Mangalore", area: "Kadri",
+    category: "Events", pay: 700, unit: "day", shift: "Weekends", posted: "Today",
+    desc: "Guide guests and manage the registration desk at weekend events." },
+
+  { id: 4, title: "Delivery Assistant", business: "QuickBite Partner", city: "Tumkur", area: "Sira Gate",
+    category: "Delivery", pay: 550, unit: "day", shift: "Flexible", posted: "Today",
+    desc: "Deliver orders within the city. Own two-wheeler preferred." },
+
+  { id: 5, title: "Maths Tuition Teacher", business: "Bright Minds Tuition", city: "Mangalore", area: "Bejai",
+    category: "Tuition", pay: 350, unit: "hour", shift: "Mon–Fri, 5–7 PM", posted: "Yesterday",
+    desc: "Teach maths to classes 8–10 in small batches of six." },
+
+  { id: 6, title: "Data Entry Assistant", business: "Coastal Traders", city: "Mangalore", area: "Balmatta",
+    category: "Office", pay: 320, unit: "day", shift: "3 hrs, flexible", posted: "Yesterday",
+    desc: "Enter invoices into a spreadsheet. Basic typing skills needed." },
+
+  { id: 7, title: "Cafe Counter Staff", business: "The Chai Stop", city: "Tumkur", area: "Batawadi",
+    category: "Restaurant", pay: 420, unit: "day", shift: "7 AM – 11 AM", posted: "2d ago",
+    desc: "Prepare tea and snacks and handle the morning counter." },
+
+  { id: 8, title: "Weekend Store Helper", business: "Metro Mart", city: "Mangalore", area: "Kankanady",
+    category: "Retail", pay: 480, unit: "day", shift: "Sat–Sun, 10 AM – 5 PM", posted: "3d ago",
+    desc: "Assist customers and restock shelves over the weekend." }
 ];
 
-let jobs = JSON.parse(localStorage.getItem("wc_jobs") || "null") || initialJobs;
-let category = "All";
+/* ---------- 2. STORAGE HELPERS ---------- */
+/* localStorage is wrapped in try/catch because some sandboxed
+   previews and private modes block it. If it fails, the site
+   still works for the current visit, it just won't remember. */
 
-function showJobs() {
-  const query = document.getElementById("searchText").value.toLowerCase();
-  const city = document.getElementById("city").value;
-  const filtered = jobs.filter(j =>
-    (category === "All" || j.category === category) &&
-    (!city || j.city === city) &&
-    (j.title.toLowerCase().includes(query) || j.category.toLowerCase().includes(query))
-  );
+function load(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (error) {
+    return fallback;
+  }
+}
 
-  const list = document.getElementById("jobList");
-  if (!filtered.length) {
-    list.innerHTML = '<p class="empty">No matching jobs found.</p>';
-    return;
+function store(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    /* Ignore: this visit simply won't be saved. */
+  }
+}
+
+/* Keys are new (wc2_*) so older demo data can't break this version. */
+let jobs = load("wc2_jobs", null) || initialJobs.map(job => ({ ...job }));
+let worker = load("wc2_worker", null);
+let applications = load("wc2_apps", []) || [];
+
+let activeCategory = "All";
+
+/* ---------- 3. JOB LIST ---------- */
+
+const jobListEl = document.getElementById("jobList");
+const resultCountEl = document.getElementById("resultCount");
+const heroCountEl = document.getElementById("heroCount");
+const categoryChipsEl = document.getElementById("categoryChips");
+const searchTextEl = document.getElementById("searchText");
+const cityEl = document.getElementById("city");
+const appListEl = document.getElementById("appList");
+
+function payLabel(job) {
+  return "₹" + Number(job.pay).toLocaleString("en-IN") + " <small>/ " + escapeHTML(job.unit) + "</small>";
+}
+
+function getFilteredJobs() {
+  const query = searchTextEl.value.trim().toLowerCase();
+  const city = cityEl.value;
+
+  return jobs.filter(job => {
+    const matchesCategory = activeCategory === "All" || job.category === activeCategory;
+    const matchesCity = !city || job.city === city;
+    const haystack = [job.title, job.business, job.city, job.area, job.category, job.shift]
+      .join(" ").toLowerCase();
+    const matchesQuery = !query || haystack.includes(query);
+    return matchesCategory && matchesCity && matchesQuery;
+  });
+}
+
+function renderCategories() {
+  categoryChipsEl.innerHTML = CATEGORIES.map(category => {
+    const count = category === "All"
+      ? jobs.length
+      : jobs.filter(job => job.category === category).length;
+
+    return '<button type="button" class="chip' + (activeCategory === category ? " active" : "") + '"' +
+      ' data-category="' + escapeHTML(category) + '" aria-pressed="' + (activeCategory === category) + '">' +
+      escapeHTML(category === "All" ? "All jobs" : category) +
+      ' <span style="opacity:.65">' + count + "</span>" +
+      "</button>";
+  }).join("");
+}
+
+function renderJobs() {
+  const visible = getFilteredJobs();
+
+  if (!visible.length) {
+    jobListEl.innerHTML =
+      '<div class="empty" style="grid-column:1/-1">' +
+        "<strong>No matching jobs</strong>" +
+        "Try another city or category, or clear the search box." +
+      "</div>";
+  } else {
+    jobListEl.innerHTML = visible.map(job => {
+      const alreadyApplied = applications.some(app => app.jobId === job.id);
+      const isNew = job.isNew === true;
+
+      return '' +
+        '<article class="job">' +
+          '<div class="job-top">' +
+            '<div class="job-ico" aria-hidden="true">' + (CATEGORY_ICONS[job.category] || "💼") + "</div>" +
+            "<div>" +
+              "<h3>" + escapeHTML(job.title) + "</h3>" +
+              '<p class="business">' + escapeHTML(job.business) + "</p>" +
+            "</div>" +
+            (isNew ? '<span class="new-badge">New</span>' : "") +
+          "</div>" +
+
+          '<div class="meta">' +
+            '<div class="meta-row">' + pinIcon() + escapeHTML(job.city) + (job.area ? " · " + escapeHTML(job.area) : "") + "</div>" +
+            '<div class="meta-row">' + clockIcon() + escapeHTML(job.shift) + "</div>" +
+            '<div class="meta-row">' + tagIcon() + escapeHTML(job.category) + "</div>" +
+          "</div>" +
+
+          (job.desc ? '<p style="font-size:.84rem;color:#667085">' + escapeHTML(job.desc) + "</p>" : "") +
+
+          '<div class="job-foot">' +
+            '<span class="pay">' + payLabel(job) + "</span>" +
+            '<span class="posted">' + escapeHTML(job.posted || "Just now") + "</span>" +
+            (alreadyApplied
+              ? '<span class="applied">Applied ✓</span>'
+              : '<button type="button" class="btn btn-primary btn-sm" data-apply="' + job.id + '">Apply</button>') +
+          "</div>" +
+        "</article>";
+    }).join("");
   }
 
-  list.innerHTML = filtered.map(j => `
-    <article class="job">
-      <span class="tag">${j.category}</span>
-      <h3>${escapeHTML(j.title)}</h3>
-      <p class="details">📍 ${escapeHTML(j.city)}</p>
-      <p class="details">🕒 ${escapeHTML(j.hours)}</p>
-      <p class="salary">${escapeHTML(j.salary)}</p>
-      <button class="primary" onclick="applyJob(${j.id})">Apply for Job</button>
-    </article>
-  `).join("");
+  resultCountEl.innerHTML = "<b>" + visible.length + "</b> of " + jobs.length + " jobs";
+  heroCountEl.textContent = jobs.length + " part-time roles open across Mangalore and Tumkur";
 }
 
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[c]);
+/* Icons used inside job cards (inline SVG keeps it dependency-free). */
+function pinIcon() {
+  return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>';
+}
+function clockIcon() {
+  return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+}
+function tagIcon() {
+  return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V5a2 2 0 0 1 2-2h7l9 9-9 9-9-9Z"/><circle cx="8" cy="8" r="1.5"/></svg>';
 }
 
-function setCategory(value,button) {
-  category = value;
-  document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
-  button.classList.add("active");
-  showJobs();
+/* Category chips (event delegation — one listener for all chips) */
+categoryChipsEl.addEventListener("click", event => {
+  const chip = event.target.closest("[data-category]");
+  if (!chip) return;
+  activeCategory = chip.dataset.category;
+  renderCategories();
+  renderJobs();
+});
+
+/* Apply buttons (event delegation) */
+jobListEl.addEventListener("click", event => {
+  const button = event.target.closest("[data-apply]");
+  if (!button) return;
+  applyForJob(Number(button.dataset.apply));
+});
+
+/* Live search */
+searchTextEl.addEventListener("input", renderJobs);
+cityEl.addEventListener("change", renderJobs);
+document.getElementById("searchBtn").addEventListener("click", () => {
+  document.getElementById("jobs").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+/* ---------- 4. WORKER PROFILE ---------- */
+
+const profileForm = document.getElementById("profileForm");
+const profileCard = document.getElementById("profileCard");
+
+function fillProfileForm() {
+  if (!worker) return;
+  document.getElementById("workerName").value = worker.name || "";
+  document.getElementById("workerPhone").value = worker.phone || "";
+  document.getElementById("workerCity").value = worker.city || "";
+  document.getElementById("workerTime").value = worker.time || "Weekday evenings";
+  document.getElementById("workerSkills").value = worker.skills || "";
 }
 
-function saveWorker() {
-  const name = document.getElementById("workerName").value.trim();
-  const phone = document.getElementById("workerPhone").value.trim();
-  if (!name || !/^[0-9]{10}$/.test(phone)) {
-    alert("Enter your name and a valid 10-digit phone number.");
-    return;
-  }
-  localStorage.setItem("wc_worker",JSON.stringify({name,phone}));
-  document.getElementById("workerMessage").textContent = "Demo profile saved on this device.";
-}
-
-function applyJob(id) {
-  const worker = JSON.parse(localStorage.getItem("wc_worker") || "null");
+function renderProfileCard() {
   if (!worker) {
-    alert("Please save your worker demo profile first.");
+    profileCard.classList.remove("show");
     return;
   }
-  const applications = JSON.parse(localStorage.getItem("wc_apps") || "[]");
-  if (applications.some(a => a.jobId === id && a.phone === worker.phone)) {
-    alert("You already applied for this demo job.");
-    return;
-  }
-  applications.push({jobId:id,phone:worker.phone,name:worker.name});
-  localStorage.setItem("wc_apps",JSON.stringify(applications));
-  alert("Demo application submitted successfully!");
+  profileCard.classList.add("show");
+  document.getElementById("profileWho").textContent = worker.name + " · " + worker.phone;
+  document.getElementById("profileDetails").textContent =
+    (worker.city || "City not set") + " · " + worker.time +
+    (worker.skills ? " · " + worker.skills : "");
 }
 
-function postJob() {
+profileForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const name = document.getElementById("workerName").value.trim();
+  const phone = document.getElementById("workerPhone").value.replace(/\s+/g, "");
+  const city = document.getElementById("workerCity").value;
+  const time = document.getElementById("workerTime").value;
+  const skills = document.getElementById("workerSkills").value.trim();
+
+  if (name.length < 2) {
+    showToast("Please enter your name.");
+    document.getElementById("workerName").focus();
+    return;
+  }
+  if (!/^[0-9]{10}$/.test(phone)) {
+    showToast("Enter a valid 10-digit phone number.");
+    document.getElementById("workerPhone").focus();
+    return;
+  }
+  if (!city) {
+    showToast("Please choose your preferred city.");
+    document.getElementById("workerCity").focus();
+    return;
+  }
+
+  worker = { name, phone, city, time, skills };
+  store("wc2_worker", worker);
+  renderProfileCard();
+  showToast("Profile saved on this phone ✓");
+});
+
+document.getElementById("editProfileBtn").addEventListener("click", () => {
+  document.getElementById("workerName").focus();
+});
+
+/* ---------- 5. APPLICATIONS ---------- */
+
+function applyForJob(jobId) {
+  if (!worker) {
+    showToast("Save your worker profile first — it takes 20 seconds.");
+    document.getElementById("profile").scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => document.getElementById("workerName").focus(), 450);
+    return;
+  }
+
+  const job = jobs.find(item => item.id === jobId);
+  if (!job) return;
+
+  if (applications.some(app => app.jobId === jobId && app.phone === worker.phone)) {
+    showToast("You already applied for this job.");
+    return;
+  }
+
+  applications.unshift({
+    jobId: job.id,
+    name: worker.name,
+    phone: worker.phone,
+    title: job.title,
+    business: job.business,
+    pay: "₹" + Number(job.pay).toLocaleString("en-IN") + "/" + job.unit,
+    date: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short" })
+  });
+
+  store("wc2_apps", applications);
+  renderJobs();
+  renderApplications();
+  showToast("Application sent to " + job.business + " ✓");
+}
+
+function renderApplications() {
+  const countEl = document.getElementById("appCount");
+  countEl.innerHTML = applications.length + (applications.length === 1 ? " application" : " applications");
+
+  if (!applications.length) {
+    appListEl.innerHTML =
+      '<div class="empty">' +
+        "<strong>No applications yet</strong>" +
+        "Save your profile, then tap Apply on any job above." +
+      "</div>";
+    return;
+  }
+
+  appListEl.innerHTML = applications.map(app =>
+    '<div class="app">' +
+      '<div class="app-ico" aria-hidden="true">' +
+        '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>' +
+      "</div>" +
+      "<div>" +
+        "<strong>" + escapeHTML(app.title) + "</strong>" +
+        "<small>" + escapeHTML(app.business) + " · applied " + escapeHTML(app.date) + " · " + escapeHTML(app.name) + "</small>" +
+      "</div>" +
+      '<span class="pay">' + escapeHTML(app.pay) + "</span>" +
+    "</div>"
+  ).join("");
+}
+
+/* ---------- 6. EMPLOYER: POST A JOB ---------- */
+
+document.getElementById("jobForm").addEventListener("submit", event => {
+  event.preventDefault();
+
   const business = document.getElementById("employerName").value.trim();
   const title = document.getElementById("jobTitle").value.trim();
   const city = document.getElementById("jobCity").value;
-  const salary = document.getElementById("jobSalary").value.trim();
-  const hours = document.getElementById("jobHours").value.trim();
-  const cat = document.getElementById("jobCategory").value;
+  const area = document.getElementById("jobArea").value.trim();
+  const category = document.getElementById("jobCategory").value;
+  const shift = document.getElementById("jobShift").value.trim();
+  const pay = Number(document.getElementById("jobPay").value);
+  const unit = document.getElementById("jobUnit").value;
+  const desc = document.getElementById("jobDesc").value.trim();
 
-  if (!business || !title || !city || !salary || !hours) {
-    alert("Please fill in all job details.");
+  if (!business || !title) {
+    showToast("Add the business name and job title.");
+    return;
+  }
+  if (!city) {
+    showToast("Please choose a city.");
+    document.getElementById("jobCity").focus();
+    return;
+  }
+  if (!shift) {
+    showToast("Add the shift timings, e.g. 5 PM – 10 PM.");
+    document.getElementById("jobShift").focus();
+    return;
+  }
+  if (!pay || pay < 50) {
+    showToast("Enter a wage of at least ₹50.");
+    document.getElementById("jobPay").focus();
     return;
   }
 
-  jobs.unshift({id:Date.now(),title,city,category:cat,salary,hours,business});
-  localStorage.setItem("wc_jobs",JSON.stringify(jobs));
-  document.getElementById("postMessage").textContent = "Demo job posted successfully!";
-  document.getElementById("jobTitle").value = "";
-  showJobs();
+  jobs.unshift({
+    id: Date.now(),
+    title,
+    business,
+    city,
+    area,
+    category,
+    pay,
+    unit,
+    shift,
+    desc,
+    posted: "Just now",
+    isNew: true
+  });
+
+  store("wc2_jobs", jobs);
+
+  /* Reset the filters so the new job is definitely visible. */
+  activeCategory = "All";
+  searchTextEl.value = "";
+  cityEl.value = "";
+  renderCategories();
+  renderJobs();
+
+  event.target.reset();
+  showToast("Job posted — it's at the top of the list ✓");
+
+  setTimeout(() => {
+    document.getElementById("jobs").scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 150);
+});
+
+/* ---------- 7. UTILITIES ---------- */
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[character]);
 }
 
-document.getElementById("searchText").addEventListener("input",showJobs);
-document.getElementById("city").addEventListener("change",showJobs);
-showJobs();
+let toastTimer;
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+}
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  try {
+    localStorage.removeItem("wc2_jobs");
+    localStorage.removeItem("wc2_worker");
+    localStorage.removeItem("wc2_apps");
+  } catch (error) { /* ignore */ }
+  jobs = initialJobs.map(job => ({ ...job }));
+  worker = null;
+  applications = [];
+  activeCategory = "All";
+  document.getElementById("profileForm").reset();
+  document.getElementById("jobForm").reset();
+  document.getElementById("searchText").value = "";
+  document.getElementById("city").value = "";
+  renderCategories();
+  renderJobs();
+  renderProfileCard();
+  renderApplications();
+  showToast("Demo data reset on this device.");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* ---------- START ---------- */
+document.getElementById("year").textContent = new Date().getFullYear();
+
+fillProfileForm();
+renderProfileCard();
+renderCategories();
+renderJobs();
+renderApplications();
 </script>
 </body>
 </html>
-
